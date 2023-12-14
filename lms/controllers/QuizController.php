@@ -5,31 +5,57 @@ class QuizController
 {
     public function index()
     {
+        $quizzes = Quiz :: getAll();
         require_once 'lms/views/quiz/index.php';
     }
 
     public function create()
     {
-        // TODO: Implement logic to display the quiz creation form
+        require_once 'lms/views/quiz/create.php';
     }
 
     public function store()
     {
-        // TODO: Implement logic to store a new quiz in the database
+        $title = $_POST['title'];
+        $lesson_id = $_POST['lesson_id'];
+
+        $quiz = new Quiz();
+        $quiz->setLesson_id($lesson_id);
+        $quiz->setTitle($title);
+        $quiz->save();
+
+        header('Location: index.php?controller=quiz&action=index');
     }
 
     public function edit()
     {
-        // TODO: Implement logic to display the quiz editing form
+        $id = $_GET['id'];
+        $quiz = Quiz::getById($id);
+        require 'lms/views/quiz/edit.php';
     }
 
+    // Update the specified quiz in the database
     public function update()
     {
-        // TODO: Implement logic to update a quiz in the database
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $lesson_id = $_POST['lesson_id'];
+
+        $quiz = Quiz::getById($id);
+        $quiz->setTitle($title);
+        $quiz->setLesson_id($lesson_id);
+        $quiz->update();
+
+        header('Location: index.php?controller=quiz&action=index');
     }
 
+    // Delete the specified quiz from the database
     public function delete()
     {
-        // TODO: Implement logic to delete a quiz from the database
+        $id = $_GET['id'];
+        $quiz = Quiz::getById($id);
+        $quiz->delete();
+
+        header('Location: index.php?controller=quiz&action=index');
     }
 }

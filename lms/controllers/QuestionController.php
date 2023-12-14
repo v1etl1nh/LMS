@@ -5,31 +5,57 @@ class QuestionController
 {
     public function index()
     {
-        // TODO: Implement logic to get a list of questions and display them
+        $questions = Question :: getAll();
+        require_once 'lms/views/question/index.php';
     }
 
     public function create()
     {
-        // TODO: Implement logic to display the question creation form
+        require_once 'lms/views/question/create.php';
     }
 
     public function store()
     {
-        // TODO: Implement logic to store a new question in the database
+        $quiz_id = $_POST['quiz_id'];
+        $question = $_POST['question'];
+
+        $question = new Question();
+        $question->setQuiz_id($quiz_id)
+        $question->setQuestion($question);
+        $question->save();
+
+        header('Location: index.php?controller=question&action=index');
     }
 
     public function edit()
     {
-        // TODO: Implement logic to display the question editing form
+        $id = $_GET['id'];
+        $question = Question::getById($id);
+        require 'lms/views/question/edit.php';
     }
 
+    // Update the specified question in the database
     public function update()
     {
-        // TODO: Implement logic to update a question in the database
+        $id = $_POST['id'];
+        $quiz_id = $_POST['quiz_id'];
+        $question = $_POST['question'];
+
+        $question = Question::getById($id);
+        $question->setQuiz_id($quiz_id)
+        $question->setQuestion($question);
+        $question->update();
+
+        header('Location: index.php?controller=question&action=index');
     }
 
+    // Delete the specified question from the database
     public function delete()
     {
-        // TODO: Implement logic to delete a question from the database
+        $id = $_GET['id'];
+        $question = Question::getById($id);
+        $question->delete();
+
+        header('Location: index.php?controller=question&action=index');
     }
 }

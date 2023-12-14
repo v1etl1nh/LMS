@@ -5,31 +5,61 @@ class OptionController
 {
     public function index()
     {
-        // TODO: Implement logic to get a list of options and display them
+        $options = Option :: getAll();
+        require_once 'lms/views/option/index.php';
     }
 
     public function create()
     {
-        // TODO: Implement logic to display the option creation form
+        require_once 'lms/views/option/create.php';
     }
 
     public function store()
     {
-        // TODO: Implement logic to store a new option in the database
+        $question_id = $_POST['question_id'];
+        $option = $_POST['option'];
+        $is_correct = $_POST['is_correct'];
+
+        $option = new Option();
+        $option->setQuestion_id($question_id)
+        $option->setOption($option);
+        $option->setIs_correct($is_correct);
+        $option->save();
+
+        header('Location: index.php?controller=option&action=index');
     }
 
     public function edit()
     {
-        // TODO: Implement logic to display the option editing form
+        $id = $_GET['id'];
+        $option = Option::getById($id);
+        require 'lms/views/option/edit.php';
     }
 
+    // Update the specified option in the database
     public function update()
     {
-        // TODO: Implement logic to update an option in the database
+        $id = $_POST['id'];
+        $question_id = $_POST['question_id'];
+        $option = $_POST['option'];
+        $is_correct = $_POST['is_correct'];
+
+        $option = Option::getById($id);
+        $option->setQuestion_id($question_id)
+        $option->setOption($option);
+        $option->setIs_correct($is_correct);
+        $option->update();
+
+        header('Location: index.php?controller=option&action=index');
     }
 
+    // Delete the specified option from the database
     public function delete()
     {
-        // TODO: Implement logic to delete an option from the database
+        $id = $_GET['id'];
+        $option = Option::getById($id);
+        $option->delete();
+
+        header('Location: index.php?controller=option&action=index');
     }
 }
