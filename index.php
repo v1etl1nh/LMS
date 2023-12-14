@@ -12,6 +12,6 @@ if (file_exists($controllerFile)) {
     $controllerInstance = new $controllerClass();
     $controllerInstance->$action();
 } else {
-    echo "Controller not found.". $controllerClass;
+    echo "Controller not found.";
 }
 ?>

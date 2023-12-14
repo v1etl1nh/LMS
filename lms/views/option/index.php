@@ -13,7 +13,7 @@
 <main class="container mt-5 mb-5">
     <div class="row">
         <div class="col-sm">
-            <a href="index.php?controller=quiz&action=create" class="btn btn-success">Thêm mới</a>
+            <a href="index.php?controller=option&action=create" class="btn btn-success">Thêm mới</a>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -35,10 +35,10 @@
                                 <td><?php echo $row['create_at']; ?></td>
                                 <td><?php echo $row['update_at']; ?></td>
                                 <td>
-                                    <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">
+                                    <a href="index.php?controller=option&action=edit?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">
                                         Edit
                                     </a>
-                                    <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">
+                                    <a href="index.php?controller=option&action=delete?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">
                                         Delete
                                     </a>
                                 </td>

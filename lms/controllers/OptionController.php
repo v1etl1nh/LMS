@@ -21,7 +21,7 @@ class OptionController
         $is_correct = $_POST['is_correct'];
 
         $option = new Option();
-        $option->setQuestion_id($question_id)
+        $option->setQuestion_id($question_id);
         $option->setOption($option);
         $option->setIs_correct($is_correct);
         $option->save();
@@ -45,7 +45,7 @@ class OptionController
         $is_correct = $_POST['is_correct'];
 
         $option = Option::getById($id);
-        $option->setQuestion_id($question_id)
+        $option->setQuestion_id($question_id);
         $option->setOption($option);
         $option->setIs_correct($is_correct);
         $option->update();

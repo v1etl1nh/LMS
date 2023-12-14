@@ -20,7 +20,7 @@ class QuestionController
         $question = $_POST['question'];
 
         $question = new Question();
-        $question->setQuiz_id($quiz_id)
+        $question->setQuiz_id($quiz_id);
         $question->setQuestion($question);
         $question->save();
 
@@ -42,7 +42,7 @@ class QuestionController
         $question = $_POST['question'];
 
         $question = Question::getById($id);
-        $question->setQuiz_id($quiz_id)
+        $question->setQuiz_id($quiz_id);
         $question->setQuestion($question);
         $question->update();
 

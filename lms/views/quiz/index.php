@@ -17,7 +17,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Lesson ID</th>
                         <th scope="col">Title</th>
                         <th scope="col">Created At</th>
@@ -34,10 +34,10 @@
                                 <td><?php echo $row['create_at']; ?></td>
                                 <td><?php echo $row['update_at']; ?></td>
                                 <td>
-                                    <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">
+                                    <a href="index.php?controller=quiz&action=edit?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">
                                         Edit
                                     </a>
-                                    <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">
+                                    <a href="index.php?controller=quiz&action=delete?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">
                                         Delete
                                     </a>
                                 </td>

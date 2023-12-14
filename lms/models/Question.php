@@ -18,7 +18,7 @@ class Question
         $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = $db->query('SELECT * FROM question');
+        $query = $db->query('SELECT * FROM questions');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -27,7 +27,7 @@ class Question
         $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = $db->prepare('SELECT * FROM question WHERE id = :id');
+        $query = $db->prepare('SELECT * FROM questions WHERE id = :id');
         $query->bindParam(':id',$id, PDO::PARAM_INT);
         $query->execute();
 
@@ -46,7 +46,7 @@ class Question
 
     public function save()
     {
-        $query = $this->db->prepare('INSERT INTO question (quiz_id, question) VALUES (:quiz_id, :question)');
+        $query = $this->db->prepare('INSERT INTO questions (quiz_id, question) VALUES (:quiz_id, :question)');
         $query->bindParam(':quiz_id', $this->quiz_id, PDO::PARAM_INT);
         $query->bindParam(':question', $this->question, PDO::PARAM_STR);
         $query->execute();
@@ -54,7 +54,7 @@ class Question
 
     public function update()
     {
-        $query = $this->db->prepare('UPDATE question SET quiz_id = :quiz_id, question = :question WHERE id = :id');
+        $query = $this->db->prepare('UPDATE questions SET quiz_id = :quiz_id, question = :question WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->bindParam(':quiz_id', $this->quiz_id, PDO::PARAM_INT);
         $query->bindParam(':question', $this->question, PDO::PARAM_STR);
@@ -63,15 +63,15 @@ class Question
 
     public function delete()
     {
-        $queryCount = $this->db->query('SELECT COUNT(*) FROM question');
+        $queryCount = $this->db->query('SELECT COUNT(*) FROM questions');
         $rowCount = $queryCount->fetchColumn();
 
-        $query = $this->db->prepare('DELETE FROM question WHERE id = :id');
+        $query = $this->db->prepare('DELETE FROM questions WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->execute();
 
         $nextAutoIncrement = $rowCount;
-        $queryResetAutoIncrement = $this->db->prepare('LTER TABLE question AUTO_INCREMENT = $nextAutoIncrement');
+        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE questions AUTO_INCREMENT = $nextAutoIncrement');
         $queryResetAutoIncrement->execute();
     }
 }

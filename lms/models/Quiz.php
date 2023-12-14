@@ -71,7 +71,7 @@ class Quiz
         $query->execute();
 
         $nextAutoIncrement = $rowCount;
-        $queryResetAutoIncrement = $this->db->prepare('LTER TABLE quizzes AUTO_INCREMENT = $nextAutoIncrement');
+        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE quizzes AUTO_INCREMENT = $nextAutoIncrement');
         $queryResetAutoIncrement->execute();
     }
 }

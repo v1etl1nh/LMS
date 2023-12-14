@@ -19,7 +19,7 @@ class Option
         $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = $db->query('SELECT * FROM option');
+        $query = $db->query('SELECT * FROM `options`');
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -28,7 +28,7 @@ class Option
         $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = $db->prepare('SELECT * FROM option WHERE id = :id');
+        $query = $db->prepare('SELECT * FROM `options` WHERE id = :id');
         $query->bindParam(':id',$id, PDO::PARAM_INT);
         $query->execute();
 
@@ -52,7 +52,7 @@ class Option
 
     public function save()
     {
-        $query = $this->db->prepare('INSERT INTO option (question_id, option, is_correct) VALUES (:question_id, :option, :is_correct)');
+        $query = $this->db->prepare('INSERT INTO `options` (question_id, option, is_correct) VALUES (:question_id, :option, :is_correct)');
         $query->bindParam(':question_id', $this->question_id, PDO::PARAM_INT);
         $query->bindParam(':option', $this->option, PDO::PARAM_STR);
         $query->bindParam(':is_correct', $this->is_correct, PDO::PARAM_STR);
@@ -61,7 +61,7 @@ class Option
 
     public function update()
     {
-        $query = $this->db->prepare('UPDATE option SET question_id = :question_id, option = :option ,is_correct = :is_correct WHERE id = :id');
+        $query = $this->db->prepare('UPDATE `options` SET question_id = :question_id, option = :option ,is_correct = :is_correct WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->bindParam(':question_id', $this->question_id, PDO::PARAM_INT);
         $query->bindParam(':option', $this->option, PDO::PARAM_STR);
@@ -71,15 +71,15 @@ class Option
 
     public function delete()
     {
-        $queryCount = $this->db->query('SELECT COUNT(*) FROM option');
+        $queryCount = $this->db->query('SELECT COUNT(*) FROM `options`');
         $rowCount = $queryCount->fetchColumn();
 
-        $query = $this->db->prepare('DELETE FROM option WHERE id = :id');
+        $query = $this->db->prepare('DELETE FROM `options` WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->execute();
 
         $nextAutoIncrement = $rowCount;
-        $queryResetAutoIncrement = $this->db->prepare('LTER TABLE option AUTO_INCREMENT = $nextAutoIncrement');
+        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE `options` AUTO_INCREMENT = $nextAutoIncrement');
         $queryResetAutoIncrement->execute();
     }
 }
