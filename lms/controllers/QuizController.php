@@ -13,7 +13,7 @@ class QuizController
 
     public function create()
     {
-        $lessons = Lesson::getAll();
+        $lessons = Lesson :: getAll();
         require_once 'lms/views/quiz/create.php';
     }
 

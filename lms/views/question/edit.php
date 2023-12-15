@@ -25,6 +25,7 @@
                     <textarea class="form-control" id="question" name="question" rows="4" required><?php echo $question['question']; ?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Update Question</button>
+                <a href="index.php?controller=question&action=index" class="btn btn-primary">Back</a>
             </form>
         </div>
     </div>
