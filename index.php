@@ -11,3 +11,5 @@ if ($controller === 'auth') {
 require_once "controllers/$controllerClass.php";
 $controllerInstance = new $controllerClass();
 $controllerInstance->$action();
+
+
