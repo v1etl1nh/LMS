@@ -1,5 +1,6 @@
 <?php
 require_once 'lms/models/Question.php';
+require_once 'lms/models/Quiz.php';
 
 class QuestionController
 {
@@ -11,6 +12,7 @@ class QuestionController
 
     public function create()
     {
+        $quizzes = Quiz :: getAll();
         require_once 'lms/views/question/create.php';
     }
 

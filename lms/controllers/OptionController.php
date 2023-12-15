@@ -1,5 +1,6 @@
 <?php
 require_once 'lms/models/Option.php';
+require_once 'lms/models/Question.php';
 
 class OptionController
 {
@@ -11,6 +12,7 @@ class OptionController
 
     public function create()
     {
+        $questions = Question :: getAll();
         require_once 'lms/views/option/create.php';
     }
 
