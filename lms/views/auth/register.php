@@ -24,6 +24,7 @@ height: 100%;
 }
     </style> 
    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 <body>
 <section class="vh-100">
@@ -82,7 +83,10 @@ height: 100%;
     <div class="d-flex justify-content-between align-items-center">
       <!-- Checkbox -->
       
-      
+      <div class="d-flex justify-content-between align-items-center">
+    <div class="g-recaptcha" data-sitekey="6LcxqjApAAAAAD1U-7yrPRFZ0JYDbcBxDbDIyON4"></div>
+</div>
+
     </div>
     <div style="display: flex; align-items: center;">
     <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem; margin-top: 10px;">Register</button>
@@ -119,16 +123,17 @@ height: 100%;
     <!-- Right -->
     </div>
   </section>
-  <?php if (isset($message3)): ?>
-      <div class="alert alert-primary" role="alert" style="position: fixed; top: 50%; right: 15%; transform: translate(-50%, -50%); width: auto; padding: 10px;">
-          <?= $message3 ?>
-      </div>
-      <script type="text/javascript">
-          setTimeout(function() {
-              window.location = 'http://localhost/LMS';
-          }, 3000); // Chuyển hướng sau 3 giây
-      </script>
-  <?php endif; ?>
+  <?php if (isset($message6)): ?>
+    <div class="alert alert-primary" role="alert" style="position: fixed; top: 50%; right: 15%; transform: translate(-50%, -50%); width: auto; padding: 10px;">
+        <?= $message6 ?>
+    </div>
+    <script type="text/javascript">
+        setTimeout(function() {
+            window.location = 'http://localhost/LMS/index.php?controller=auth&action=dk';
+        }, 3000); // Chuyển hướng sau 3 giây
+    </script>
+<?php endif; ?>
+
   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
       async defer>
   </script>
