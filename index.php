@@ -1,13 +1,21 @@
 <?php
-$controller = $_GET['controller'] ?? 'article';
-$action = $_GET['action'] ?? 'index';
+require_once 'config.php';
 
-if ($controller === 'auth') {
-    $controllerClass = 'AuthController';
+// Get the controller and action from the URL
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'course';
+$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+
+// Create the controller class name
+$controllerClass = ucfirst($controller) . 'Controller';
+
+// Instantiate the controller
+$controllerFile = "lms/controllers/$controllerClass.php";
+//echo $controllerFile;
+if (file_exists($controllerFile)) {
+    require_once $controllerFile;
+    $controllerInstance = new $controllerClass();
+    $controllerInstance->$action();
 } else {
-    $controllerClass = 'ArticleController';
+    echo "Controller not found.";
 }
-
-require_once "controllers/$controllerClass.php";
-$controllerInstance = new $controllerClass();
-$controllerInstance->$action();
+?>
