@@ -19,11 +19,11 @@ class QuestionController
     public function store()
     {
         $quiz_id = $_POST['quiz_id'];
-        $question = $_POST['question'];
+        $questionText = $_POST['question'];
 
         $question = new Question();
         $question->setQuiz_id($quiz_id);
-        $question->setQuestion($question);
+        $question->setQuestion($questionText);
         $question->save();
 
         header('Location: index.php?controller=question&action=index');
@@ -41,11 +41,12 @@ class QuestionController
     {
         $id = $_POST['id'];
         $quiz_id = $_POST['quiz_id'];
-        $question = $_POST['question'];
+        $questionText = $_POST['question'];
 
-        $question = Question::getById($id);
+        $question = new Question();
+        $question->setId($id);
         $question->setQuiz_id($quiz_id);
-        $question->setQuestion($question);
+        $question->setQuestion($questionText);
         $question->update();
 
         header('Location: index.php?controller=question&action=index');
@@ -55,7 +56,8 @@ class QuestionController
     public function delete()
     {
         $id = $_GET['id'];
-        $question = Question::getById($id);
+        $question = new Question();
+        $question->setId($id);
         $question->delete();
 
         header('Location: index.php?controller=question&action=index');

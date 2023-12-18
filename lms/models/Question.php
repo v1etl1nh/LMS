@@ -34,6 +34,11 @@ class Question
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function setQuiz_id($quiz_id)
     {
         $this->quiz_id = $quiz_id;
@@ -71,7 +76,8 @@ class Question
         $query->execute();
 
         $nextAutoIncrement = $rowCount;
-        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE questions AUTO_INCREMENT = $nextAutoIncrement');
+        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE questions AUTO_INCREMENT = :nextAutoIncrement');
+        $queryResetAutoIncrement->bindParam(':nextAutoIncrement', $nextAutoIncrement, PDO::PARAM_INT);
         $queryResetAutoIncrement->execute();
     }
 }

@@ -35,6 +35,11 @@ class Option
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function setQuestion_id($question_id)
     {
         $this->question_id = $question_id;
@@ -79,7 +84,8 @@ class Option
         $query->execute();
 
         $nextAutoIncrement = $rowCount;
-        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE `options` AUTO_INCREMENT = $nextAutoIncrement');
+        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE `options` AUTO_INCREMENT = :nextAutoIncrement');
+        $queryResetAutoIncrement->bindParam(':nextAutoIncrement', $nextAutoIncrement, PDO::PARAM_INT);
         $queryResetAutoIncrement->execute();
     }
 }

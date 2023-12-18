@@ -19,12 +19,12 @@ class OptionController
     public function store()
     {
         $question_id = $_POST['question_id'];
-        $option = $_POST['option'];
+        $optionText = $_POST['option'];
         $is_correct = $_POST['is_correct'];
 
         $option = new Option();
         $option->setQuestion_id($question_id);
-        $option->setOption($option);
+        $option->setOption($optionText);
         $option->setIs_correct($is_correct);
         $option->save();
 
@@ -43,12 +43,13 @@ class OptionController
     {
         $id = $_POST['id'];
         $question_id = $_POST['question_id'];
-        $option = $_POST['option'];
+        $optionText = $_POST['option'];
         $is_correct = $_POST['is_correct'];
 
-        $option = Option::getById($id);
+        $option = new Option();
+        $option->setId($id);
         $option->setQuestion_id($question_id);
-        $option->setOption($option);
+        $option->setOption($optionText);
         $option->setIs_correct($is_correct);
         $option->update();
 
@@ -59,7 +60,8 @@ class OptionController
     public function delete()
     {
         $id = $_GET['id'];
-        $option = Option::getById($id);
+        $option = new Option();
+        $option->setId($id);
         $option->delete();
 
         header('Location: index.php?controller=option&action=index');
