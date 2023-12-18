@@ -1,5 +1,7 @@
 <?php
 require_once 'lms/models/Quiz.php';
+require_once 'lms/models/Lesson.php';
+
 
 class QuizController
 {
@@ -11,6 +13,7 @@ class QuizController
 
     public function create()
     {
+        $lessons = Lesson :: getAll();
         require_once 'lms/views/quiz/create.php';
     }
 
@@ -41,7 +44,8 @@ class QuizController
         $title = $_POST['title'];
         $lesson_id = $_POST['lesson_id'];
 
-        $quiz = Quiz::getById($id);
+        $quiz = new Quiz();
+        $quiz->setId($id);
         $quiz->setTitle($title);
         $quiz->setLesson_id($lesson_id);
         $quiz->update();
@@ -53,7 +57,8 @@ class QuizController
     public function delete()
     {
         $id = $_GET['id'];
-        $quiz = Quiz::getById($id);
+        $quiz = new Quiz();
+        $quiz->setId($id);
         $quiz->delete();
 
         header('Location: index.php?controller=quiz&action=index');
