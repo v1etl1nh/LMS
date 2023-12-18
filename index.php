@@ -14,13 +14,4 @@ if (file_exists($controllerFile)) {
 } else {
     echo "Controller not found.";
 }
-<<<<<<< HEAD
-
-require_once "controllers/$controllerClass.php";
-$controllerInstance = new $controllerClass();
-$controllerInstance->$action();
-
-
-=======
 ?>
->>>>>>> kiet
