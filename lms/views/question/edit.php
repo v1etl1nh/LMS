@@ -18,7 +18,7 @@
                 <input type="hidden" name="id" value="<?php echo $question['id']; ?>">
                 <div class="form-group">
                     <label for="quiz_id">Quiz ID:</label>
-                    <input type="text" class="form-control" id="quiz_id" name="quiz_id" value="<?php echo $question['quiz_id']; ?>" required>
+                    <input class="form-control" id="quiz_id" name="quiz_id" value="<?php echo $question['quiz_id']; ?>" readonly required>
                 </div>
                 <div class="form-group">
                     <label for="question">Question:</label>

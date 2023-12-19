@@ -32,11 +32,11 @@ class QuestionController
     public function edit()
     {
         $id = $_GET['id'];
+        $quizzes = Quiz :: getAll();
         $question = Question::getById($id);
         require 'lms/views/question/edit.php';
     }
 
-    // Update the specified question in the database
     public function update()
     {
         $id = $_POST['id'];
@@ -52,7 +52,6 @@ class QuestionController
         header('Location: index.php?controller=question&action=index');
     }
 
-    // Delete the specified question from the database
     public function delete()
     {
         $id = $_GET['id'];
