@@ -45,30 +45,21 @@ session_start();
 </html>
 
 <?php
-//require_once 'config.php';
-//<<<<<<< HEAD
-//
-//$controller = isset($_GET['controller']) ? $_GET['controller'] : 'option';
-//=======
-//// Get the controller and action from the URL
-//$controller = isset($_GET['controller']) ? $_GET['controller'] : 'auth';
-//>>>>>>> be3404165be495d0db98495a1df4e87617488859
-//$action = isset($_GET['action']) ? $_GET['action'] : 'index';
-//
-//// Create the controller class name
-//$controllerClass = ucfirst($controller) . 'Controller';
-//
-//// Instantiate the controller
-//$controllerFile = "lms/controllers/$controllerClass.php";
-//<<<<<<< HEAD
-////echo $controllerFile;
-//=======
-//>>>>>>> be3404165be495d0db98495a1df4e87617488859
-//if (file_exists($controllerFile)) {
-//    require_once $controllerFile;
-//        $controllerInstance = new $controllerClass();
-//        $controllerInstance->$action();
-//} else {
-//    echo "Controller not found.".$controllerFile;
-//}
-//?>
+require_once 'config.php';
+// Get the controller and action from the URL
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'auth';
+$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+
+// Create the controller class name
+$controllerClass = ucfirst($controller) . 'Controller';
+
+// Instantiate the controller
+$controllerFile = "lms/controllers/$controllerClass.php";
+if (file_exists($controllerFile)) {
+    require_once $controllerFile;
+        $controllerInstance = new $controllerClass();
+        $controllerInstance->$action();
+} else {
+    echo "Controller not found.".$controllerFile;
+}
+?>
