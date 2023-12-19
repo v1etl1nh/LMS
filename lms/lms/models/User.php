@@ -7,7 +7,6 @@ class User
     private $name;
     private $email;
     private $password;
-    private $plainPassword;
 
     public function __construct()
     {
@@ -60,25 +59,17 @@ class User
         $query->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
         $query->execute();
     }
-    public function setPlainPassword($plainPassword)
+
+    public function update()
     {
-        $this->plainPassword = $plainPassword;
+        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+        $query = $this->db->prepare('UPDATE users SET name = :name, email = :email, password=:password WHERE id = :id');
+        $query->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $query->bindParam(':name', $this->name, PDO::PARAM_STR);
+        $query->bindParam(':email', $this->email, PDO::PARAM_STR);
+        $query->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+        $query->execute();
     }
-    
-    public static function update($id, $name, $email, $password)
-{
-    $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $query = $db->prepare('UPDATE users SET name = :name, email = :email, password=:password WHERE id = :id');
-    $query->bindParam(':id', $id, PDO::PARAM_INT);
-    $query->bindParam(':name', $name, PDO::PARAM_STR);
-    $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':password',$hashedPassword, PDO::PARAM_STR);
-    $query->execute();
-}
-
 
     public function delete()
     {
@@ -94,9 +85,9 @@ class User
         $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE users AUTO_INCREMENT = $nextAutoIncrement');
         $queryResetAutoIncrement->execute();
     }
+
     public static function isEmailExists($email)
-{
-    try {
+    {
         $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -105,13 +96,5 @@ class User
         $query->execute();
 
         return $query->fetchColumn() > 0;
-    } catch (PDOException $e) {
-        // Handle the exception (log, display an error message, etc.)
-        echo "Error: " . $e->getMessage();
-        return false; // Indicate failure
     }
-}
-
-
-
 }

@@ -84,7 +84,7 @@ height: 100%;
       <!-- Checkbox -->
       
       <div class="d-flex justify-content-between align-items-center">
-      <div class="g-recaptcha" data-sitekey="6LcxqjApAAAAAD1U-7yrPRFZ0JYDbcBxDbDIyON4"></div>
+    <div class="g-recaptcha" data-sitekey="6LcxqjApAAAAAD1U-7yrPRFZ0JYDbcBxDbDIyON4"></div>
 </div>
 
     </div>
