@@ -32,6 +32,7 @@ class QuestionController
     public function edit()
     {
         $id = $_GET['id'];
+        $quizzes = Quiz :: getAll();
         $question = Question::getById($id);
         require 'lms/views/question/edit.php';
     }

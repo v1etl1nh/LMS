@@ -1,4 +1,3 @@
-<!-- views/quiz/edit.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +18,13 @@
                 <input type="hidden" name="id" value="<?php echo $quiz['id']; ?>">
                 <div class="form-group">
                     <label for="lesson_id">Lesson ID:</label>
-                    <input type="text" class="form-control" id="lesson_id" name="lesson_id" value="<?php echo $quiz['lesson_id']; ?>" required>
+                    <select class="form-control" id="lesson_id" name="lesson_id" required>
+                        <?php foreach ($lessons as $lesson): ?>
+                            <option value="<?php echo $quiz['lesson_id']; ?>">
+                                <?php echo $lesson['id']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="title">Title:</label>

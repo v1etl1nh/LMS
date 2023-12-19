@@ -35,6 +35,36 @@ class Option
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function getByQuestion_Id($question_id)
+    {
+        $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $query = $db->prepare('SELECT * FROM `options` WHERE question_id = :question_id');
+        $query->bindParam(':question_id',$question_id, PDO::PARAM_INT);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $options = [];
+        foreach ($results as $value) {
+            if (is_array($value) && array_key_exists('id', $value) && array_key_exists('option', $value) && array_key_exists('is_correct', $value)) {
+                $options[] = [
+                    'id' => $value['id'],
+                    'option' => $value['option'],
+                    'is_correct' => $value['is_correct']
+                ];
+            }
+        }
+        $letters = ['A', 'B', 'C', 'D'];
+        $array = [];
+        for ($i = 0;$i < count($letters); $i++) {
+            if (is_array($options) && array_key_exists($i, $options))
+            $array[$letters[$i]] = $options[$i];
+        }
+        
+        return $array;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
