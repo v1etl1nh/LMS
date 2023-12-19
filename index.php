@@ -1,8 +1,8 @@
 <?php
 require_once 'config.php';
 
-$controller = isset($_GET['controller']) ? $_GET['controller'] : 'auth';
-$action = isset($_GET['action']) ? $_GET['action'] : 'login';
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'option';
+$action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
 // Create the controller class name
 $controllerClass = ucfirst($controller) . 'Controller';
