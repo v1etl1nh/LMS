@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz List</title>
+    <title>Question List</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-
+<?php require_once 'lms/views/menus.php'; ?>
 <main class="container mt-5 mb-5">
     <div class="row">
         <div class="col-sm">
@@ -21,7 +21,8 @@
                         <th scope="col">Quiz ID</th>
                         <th scope="col">Question</th>
                         <th scope="col">Created At</th>
-                        <th scope="col">Update At</th>
+                        <th scope="col">Updated At</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,13 +32,13 @@
                                 <th scope="row"><?php echo $row['id']; ?></th>
                                 <td><?php echo $row['quiz_id']; ?></td>
                                 <td><?php echo $row['question']; ?></td>
-                                <td><?php echo $row['create_at']; ?></td>
-                                <td><?php echo $row['update_at']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
+                                <td><?php echo $row['updated_at']; ?></td>
                                 <td>
-                                    <a href="index.php?controller=question&action=edit?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">
+                                    <a href="index.php?controller=question&action=edit&id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">
                                         Edit
                                     </a>
-                                    <a href="index.php?controller=question&action=delete?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">
+                                    <a href="#" onclick="confirmXoa(<?php echo $row['id']; ?>)" class="btn btn-danger btn-sm">
                                         Delete
                                     </a>
                                 </td>
@@ -45,7 +46,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="5">Không có dữ liệu</td>
+                            <td colspan="6">Không có dữ liệu</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -58,6 +59,13 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<script>
+    function confirmXoa(id) {
+        var xacNhan = confirm("Bạn có chắc chắn muốn xóa không?");
+        if (xacNhan) {
+            window.location.href = "index.php?controller=question&action=delete&id="+id;
+        }
+    }
+</script>
 </body>
 </html>

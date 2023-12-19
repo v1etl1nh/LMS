@@ -1,12 +1,15 @@
 <?php
 require_once 'config.php';
 
-$controller = isset($_GET['controller']) ? $_GET['controller'] : 'quiz';
-$action = isset($_GET['action']) ? $_GET['action'] : 'index';
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'auth';
+$action = isset($_GET['action']) ? $_GET['action'] : 'login';
 
+// Create the controller class name
 $controllerClass = ucfirst($controller) . 'Controller';
 
+// Instantiate the controller
 $controllerFile = "lms/controllers/$controllerClass.php";
+//echo $controllerFile;
 if (file_exists($controllerFile)) {
     require_once $controllerFile;
     $controllerInstance = new $controllerClass();
