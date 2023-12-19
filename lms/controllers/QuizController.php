@@ -38,7 +38,6 @@ class QuizController
         require 'lms/views/quiz/edit.php';
     }
 
-    // Update the specified quiz in the database
     public function update()
     {
         $id = $_POST['id'];
@@ -54,7 +53,6 @@ class QuizController
         header('Location: index.php?controller=quiz&action=index');
     }
 
-    // Delete the specified quiz from the database
     public function delete()
     {
         $id = $_GET['id'];

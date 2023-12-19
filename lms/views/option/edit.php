@@ -17,7 +17,7 @@
             <form action="index.php?controller=option&action=update" method="post" onsubmit="return validateForm()">                
                 <div class="form-group">
                     <label for="question_id">Question ID:</label>
-                    <input type="text" class="form-control" id="question_id" name="question_id" value="<?php echo $question['id'].'-'.$question['question'];?>" required>
+                    <input type="text" class="form-control" id="question_id" name="question_id" value="<?php echo $question['id'].'-'.$question['question'];?>" readonly required>
                 </div>
 
                 <?php foreach ($optionswithquestion as $key => $value): ?>
