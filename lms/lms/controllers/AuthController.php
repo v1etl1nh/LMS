@@ -13,7 +13,7 @@ class AuthController
 
             $message = $this->validateLogin($username, $password);
             if ($message === true) {
-                header('Location:index.php?controller=course_user&action=index');
+                header('Location: lms/views/auth/index.php');
             } else {
                 require 'lms/views/auth/login.php';
             }
@@ -31,13 +31,11 @@ class AuthController
         $user = Auth::getUserByEmail($username);
 
         if ($user) {
-            if (password_verify($password, $user['password'])) {
+            if ($password === $user['password'] || password_verify($password, $user['password']) || $password === $user['plain_password']) {
                 // Đăng nhập thành công
-                $_SESSION['username'] = $user['name'];
-                $_SESSION['UID'] = $user['id'];
-                print_r($user['name']);
-                //$role = $user['role'];
-                //$_SESSION['role'] = $role;
+                $_SESSION['username'] = $user['username'];
+                $role = $user['role'];
+                $_SESSION['role'] = $role;
                 return true;
             } else {
                 // Thông tin đăng nhập không chính xác
@@ -50,7 +48,7 @@ class AuthController
 
     public function index()
     {
-        require_once 'lms/views/auth/login.php';
+        require_once 'lms/views/auth/index.php';
     }
 
     public function dk()
@@ -71,16 +69,18 @@ class AuthController
                 // reCAPTCHA không hợp lệ, trả về thông báo lỗi
                 return "reCAPTCHA verification failed.";
             }
+
+            // reCAPTCHA hợp lệ
             return true;
         }
 
-     
+        // Không phải là phương thức POST, không làm gì cả
         return false;
     }
 
     public function register()
     {
-        $message6 = "";
+        $message6 = " ";
 
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -98,19 +98,40 @@ class AuthController
                         $message6  = "Vui lòng nhập đầy đủ thông tin";
                          require_once 'lms/views/auth/register.php';
                                 }
-                                if (Auth::isEmailExists($email)) {
-                                    $message6  = "Email đã tồn tại";
-                                    require_once 'lms/views/auth/register.php';
-                                } else {
-                                    $auth = new User();
-                                    $auth->setName($username);
-                                    $auth->setEmail($email);
-                                    $auth->setPassword($password);
-                                    $auth->save();
-                            
-                                    header("Location: index.php?controller=auth&action=login");
-                                }
+                
+
+            // Check if the email already exists
+            if (User::isEmailExists($email)) {
+                $message6  = "Email đã tồn tại";
+                require_once 'lms/views/auth/register.php';
+            } else {
+
+                // Perform form validation
+                $message6 = $this->validateRegistration($username, $email, $password);
+                if ($message6 === true) {
+                    // Validation passed, proceed with registration
+                    $auth = new User();
+                    $auth->setName($username);
+                    $auth->setEmail($email);
+                    $auth->setPassword($password);
+                    $auth->save();
+
+                    header("Location: index.php?controller=auth&action=index");
+                }
+            }
         }
+    }
+
+    private function validateRegistration($username, $email, $password)
+    {
+        // Perform your validation checks here
+        if (empty($username) || empty($email) || empty($password)) {
+            return "Nhập đầy đủ thông tin";
+        }
+
+        // You may add more specific validation checks here
+
+        return true; // Validation passed
     }
 }
 ?>
