@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +20,23 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
       </ul>
+
+      <ul>
+        <?php
+          if(isset($_SESSION['username'])){
+            echo $_SESSION['username'] . ' ';
+          }else
+            echo '<a class="text-decoration-none" href="index.php?controller=auth&action=index">'.'Đăng nhập'.'</a>';
+        ?>
+      </ul>
+      <ul>
+        <?php
+        if(isset($_SESSION['username'])){
+          echo '<a class="text-decoration-none" href="index.php?controller=auth&action=index">Đăng xuất</a>';
+          unset($_SESSION['username']);   
+        }       
+        ?>
+      </ul>
     </div>
     
   </div>
@@ -26,9 +46,8 @@
 
 <?php
 require_once 'config.php';
-
 // Get the controller and action from the URL
-$controller = isset($_GET['controller']) ? $_GET['controller'] : 'course_user';
+$controller = isset($_GET['controller']) ? $_GET['controller'] : 'auth';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
 // Create the controller class name
@@ -36,12 +55,11 @@ $controllerClass = ucfirst($controller) . 'Controller';
 
 // Instantiate the controller
 $controllerFile = "lms/controllers/$controllerClass.php";
-//echo $controllerFile;
 if (file_exists($controllerFile)) {
     require_once $controllerFile;
-    $controllerInstance = new $controllerClass();
-    $controllerInstance->$action();
+        $controllerInstance = new $controllerClass();
+        $controllerInstance->$action();
 } else {
-    echo "Controller not found.";
+    echo "Controller not found.".$controllerFile;
 }
 ?>

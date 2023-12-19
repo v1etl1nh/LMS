@@ -1,47 +1,19 @@
 <?php
-class Lesson{
+
+class Lesson
+{
+    private $db;
     private $id;
     private $course_id;
     private $title;
     private $description;
-	private $db;
 
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
-
-	public function getId() {
-		return $this->id;
-	}
-
-	public function setId($id) {
-		$this->id = $id;
-	}
-
-    public function getCourse_Id() {
-		return $this->id;
-	}
-
-	public function setCourse_Id($course_id) {
-		$this->course_id = $course_id;
-	}
-
-	public function getTitle() {
-		return $this->title;
-	}
-
-	public function setTitle($title) {
-		$this->title = $title;
-	}
-
-	public function getDescription() {
-		return $this->description;
-	}
-
-	public function setDescription($description) {
-		$this->description = $description;
-	}
 
     public static function getAll()
     {
@@ -52,7 +24,7 @@ class Lesson{
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-	public static function getById($id)
+    public static function getById($id)
     {
         $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -61,43 +33,60 @@ class Lesson{
         $query->bindParam(':id',$id, PDO::PARAM_INT);
         $query->execute();
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        $lesson = new Lesson();
-        $lesson->setId($id);
-        $lesson->setCourse_Id($result['course_id']);
-        $lesson->setTitle($result['title']);
-        $lesson->setDescription($result['description']);
-
-        return $lesson;
+        return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-	public function save()
+    public function setId($id)
     {
-        $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->id = $id;
+    }
 
-        $query = $this->db->prepare('INSERT INTO lessons (`course_id`, `title`, `description`) VALUES (:course_id, :title, '.':description'.')');
-        $query->bindParam(':course_id', $this->course_id, PDO::PARAM_INT);
-        $query->bindParam(':title', $this->title, PDO::PARAM_STR);
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    public function setCourse_id($course_id)
+    {
+        $this->course_id = $course_id;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function save()
+    {
+        $query = $this->db->prepare('INSERT INTO lessons (course_id, title, description) VALUES (:course_id, :title, :description)');
         $query->bindParam(':description', $this->description, PDO::PARAM_STR);
+        $query->bindParam(':title', $this->title, PDO::PARAM_STR);
+        $query->bindParam(':course_id', $this->course_id, PDO::PARAM_INT);
         $query->execute();
     }
 
     public function update()
     {
-        $query = $this->db->prepare('UPDATE lessons SET `course_id` = :course_id, `title` = :title, `description` = '.':description'.' WHERE id = :id');
+        $query = $this->db->prepare('UPDATE lessons SET title = :title, course_id = :course_id, description=:description WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
-        $query->bindParam(':course_id', $this->course_id, PDO::PARAM_INT);
         $query->bindParam(':title', $this->title, PDO::PARAM_STR);
+        $query->bindParam(':course_id', $this->course_id, PDO::PARAM_INT);
         $query->bindParam(':description', $this->description, PDO::PARAM_STR);
         $query->execute();
     }
 
     public function delete()
     {
+        $queryCount = $this->db->query('SELECT COUNT(*) FROM lessons');
+        $rowCount = $queryCount->fetchColumn();
+
         $query = $this->db->prepare('DELETE FROM lessons WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->execute();
+
+        $nextAutoIncrement = $rowCount;
+        $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE lessons AUTO_INCREMENT = :nextAutoIncrement');
+        $queryResetAutoIncrement->bindParam(':nextAutoIncrement', $nextAutoIncrement, PDO::PARAM_INT);
+        $queryResetAutoIncrement->execute();
     }
 }
-?>

@@ -7,9 +7,9 @@
 </head>
 <body>
     <h1 class="text-center">Registered Course</h1>
-        <div style="display: flex; width: 50%;" class="d-flex justify-content-center align-items-center mt-5 mx-auto">
+        <div style="display: flex; width: 50%; flex-wrap: wrap;" class="d-flex justify-content-center align-items-center mt-5 mx-auto">
             <?php foreach ($course_user as $courseUser):?>
-                <div class="card" style="width: 220px; margin-left: 20px;">
+                <div class="card m-3" style="width: 220px;">
                     <a href=""><img src="https://png.pngtree.com/thumb_back/fh260/background/20210108/pngtree-simple-red-checkered-background-image_531695.jpg" class="" alt="" width="100%"></a>
                     <div class="card-body">
                         <a class="text-center text-decoration-none"><p class="card-text text-center"><?php  echo $courseUser['title'] ?></p></a>

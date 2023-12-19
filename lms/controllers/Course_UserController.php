@@ -1,11 +1,10 @@
 <?php
 require_once 'lms/models/Course_User.php';
 
-
 class Course_UserController{
     public function index()
     {
-        $course_user = Course_User::getByUserId(1);
+        $course_user = Course_User::getByUserId($_SESSION['UID']);
         // echo "<pre>";
         // print_r($courses);
         // echo "</pre>";
