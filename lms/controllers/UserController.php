@@ -24,7 +24,7 @@ class UserController
                         $message6  = "Vui lòng nhập đầy đủ thông tin";
                          require_once 'lms/views/user/create.php';
                                 }
-                                if (Auth::isEmailExists($email)) {
+                                if (User::isEmailExists($email)) {
                                     $message6  = "Email đã tồn tại";
                                     require_once 'lms/views/user/create.php';
                                 } else {

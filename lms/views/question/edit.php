@@ -18,13 +18,20 @@
                 <input type="hidden" name="id" value="<?php echo $question['id']; ?>">
                 <div class="form-group">
                     <label for="quiz_id">Quiz ID:</label>
-                    <input type="text" class="form-control" id="quiz_id" name="quiz_id" value="<?php echo $question['quiz_id']; ?>" required>
+                    <select class="form-control" id="quiz_id" name="quiz_id" required>
+                        <?php foreach ($quizzes as $quiz): ?>
+                            <option value="<?php echo $question['quiz_id']; ?>">
+                                <?php echo $quiz['id']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="question">Question:</label>
                     <textarea class="form-control" id="question" name="question" rows="4" required><?php echo $question['question']; ?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Update Question</button>
+                <a href="index.php?controller=question&action=index" class="btn btn-primary">Back</a>
             </form>
         </div>
     </div>

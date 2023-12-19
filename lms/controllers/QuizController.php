@@ -13,7 +13,7 @@ class QuizController
 
     public function create()
     {
-        $lessons = Lesson::getAll();
+        $lessons = Lesson :: getAll();
         require_once 'lms/views/quiz/create.php';
     }
 
@@ -33,6 +33,7 @@ class QuizController
     public function edit()
     {
         $id = $_GET['id'];
+        $lessons = Lesson :: getAll();
         $quiz = Quiz::getById($id);
         require 'lms/views/quiz/edit.php';
     }
@@ -44,7 +45,8 @@ class QuizController
         $title = $_POST['title'];
         $lesson_id = $_POST['lesson_id'];
 
-        $quiz = Quiz::getById($id);
+        $quiz = new Quiz();
+        $quiz->setId($id);
         $quiz->setTitle($title);
         $quiz->setLesson_id($lesson_id);
         $quiz->update();
@@ -56,7 +58,8 @@ class QuizController
     public function delete()
     {
         $id = $_GET['id'];
-        $quiz = Quiz::getById($id);
+        $quiz = new Quiz();
+        $quiz->setId($id);
         $quiz->delete();
 
         header('Location: index.php?controller=quiz&action=index');

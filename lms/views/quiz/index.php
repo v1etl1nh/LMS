@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-
+<?php require_once 'lms/views/menus.php'; ?>
 <main class="container mt-5 mb-5">
     <div class="row">
         <div class="col-sm">
@@ -46,7 +46,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="6">Không có dữ liệu</td> <!-- Chỉnh lại số cột là 6 -->
+                            <td colspan="6">Không có dữ liệu</td> 
                         </tr>
                     <?php endif; ?>
                 </tbody>

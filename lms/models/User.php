@@ -7,7 +7,7 @@ class User
     private $name;
     private $email;
     private $password;
-    private $plainPassword;
+
 
     public function __construct()
     {
@@ -60,10 +60,6 @@ class User
         $query->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
         $query->execute();
     }
-    public function setPlainPassword($plainPassword)
-    {
-        $this->plainPassword = $plainPassword;
-    }
     
     public static function update($id, $name, $email, $password)
 {
@@ -111,7 +107,5 @@ class User
         return false; // Indicate failure
     }
 }
-
-
 
 }
