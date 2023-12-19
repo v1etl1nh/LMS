@@ -109,11 +109,11 @@ class Option
         $queryCount = $this->db->query('SELECT COUNT(*) FROM `options`');
         $rowCount = $queryCount->fetchColumn();
 
-        $query = $this->db->prepare('DELETE FROM `options` WHERE id = :id');
-        $query->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $query = $this->db->prepare('DELETE FROM `options` WHERE question_id = :question_id');
+        $query->bindParam(':question_id', $this->question_id, PDO::PARAM_INT);
         $query->execute();
 
-        $nextAutoIncrement = $rowCount;
+        $nextAutoIncrement = $rowCount-3;
         $queryResetAutoIncrement = $this->db->prepare('ALTER TABLE `options` AUTO_INCREMENT = :nextAutoIncrement');
         $queryResetAutoIncrement->bindParam(':nextAutoIncrement', $nextAutoIncrement, PDO::PARAM_INT);
         $queryResetAutoIncrement->execute();

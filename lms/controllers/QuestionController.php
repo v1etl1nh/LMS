@@ -37,7 +37,6 @@ class QuestionController
         require 'lms/views/question/edit.php';
     }
 
-    // Update the specified question in the database
     public function update()
     {
         $id = $_POST['id'];
@@ -53,7 +52,6 @@ class QuestionController
         header('Location: index.php?controller=question&action=index');
     }
 
-    // Delete the specified question from the database
     public function delete()
     {
         $id = $_GET['id'];

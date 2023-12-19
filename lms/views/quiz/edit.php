@@ -18,13 +18,7 @@
                 <input type="hidden" name="id" value="<?php echo $quiz['id']; ?>">
                 <div class="form-group">
                     <label for="lesson_id">Lesson ID:</label>
-                    <select class="form-control" id="lesson_id" name="lesson_id" required>
-                        <?php foreach ($lessons as $lesson): ?>
-                            <option value="<?php echo $quiz['lesson_id']; ?>">
-                                <?php echo $lesson['id']; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <input class="form-control" id="lesson_id" name="lesson_id" value="<?php echo $quiz['lesson_id']; ?>" readonly required>
                 </div>
                 <div class="form-group">
                     <label for="title">Title:</label>

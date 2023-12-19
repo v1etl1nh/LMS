@@ -69,8 +69,10 @@ class OptionController
     public function delete()
     {
         $id = $_GET['id'];
+        $question_id = Option::getById($id);
+        $question_id = $question_id['question_id'];
         $option = new Option();
-        $option->setId($id);
+        $option->setQuestion_Id($question_id);
         $option->delete();
 
         header('Location: index.php?controller=option&action=index');
